@@ -2,5 +2,8 @@
 
 .code
 .webstorm
+.idea
+
+node_modules
 
 .env

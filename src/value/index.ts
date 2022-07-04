@@ -6,9 +6,10 @@ import {
     onEnd as eventOnEnd,
     next as eventNext,
     error as eventError,
-    end as eventEnd
+    end as eventEnd,
+    copy as eventCopy
 } from "../event";
-import { Nullable, TMap, TSubscriber, TSubscribers } from "../_/types";
+import { Noop, Nullable, TMap, TSubscriber, TSubscribers } from "../_/types";
 
 export const VALUE = Symbol();
 export const EVENT = Symbol();
@@ -63,27 +64,55 @@ export function onEnd<O, I>(value$: Value<I, O>, callback: TSubscriber<undefined
     return eventOnEnd(value$[EVENT], callback);
 }
 
-// export function merge(events: Event<any, any>[]) {
-//     const _$ = event();
-//     const memo: any = Array.isArray(events) ? []: {};
-//     const unsubs: any = Array.isArray(events) ? []: {};
+export function copy<II, IO, O = IO>(
+    value$: Value<IO, II>,
+    map: TMap<IO, O>,
+    subscribers?: Nullable<TSubscribers<O>>
+) {
+    return eventCopy(value$[EVENT], map, subscribers);
+}
 
-//     for(const k in events) {
-//         const event$ = events[k];
+export type Either<L, R> = L | R;
 
-//         memo[k] = pull(event$);
+export type TValueArray = Value<any, any>[];
 
-//         unsubs[k] = onNext(event$, (value) => {
-//             memo[k] = value;
-//             next(_$, memo);
-//         });
-//     }
+export type TValueObject = Record<string, Value<any, any>>;
 
-//     onEnd(_$, () => {
-//         for(const k in unsubs) {
-//             unsubs[k]();
-//         }
-//     });
+export type TValues = Either<TValueArray, TValueObject>;
 
-//     return _$;
-// }
+export type TValueInput = any[] | Record<string, any>;
+
+export type TInferValues<T extends TValueInput> = T extends TValueInput
+    ? T extends infer X
+        ? { [K in keyof X]: Value<any, X[K]> }
+        : never
+    : never;
+
+export function merge<
+    T extends TValueInput,
+    O extends TValues = TInferValues<T>
+>(events: O) {
+    const _$ = value<T, T>(undefined as any);
+
+    const memo: any = Array.isArray(events) ? []: {};
+    const unsubs: Noop[] = [];
+
+    for(const k in events) {
+        const event$ = events[k] as unknown as Value<any, any>;
+
+        memo[k] = pull(event$);
+
+        unsubs.push(onNext(event$, (value) => {
+            memo[k] = value;
+            next(_$, memo);
+        }));
+    }
+
+    onEnd(_$, () => {
+        for(const k in unsubs) {
+            unsubs[k]();
+        }
+    });
+
+    return _$;
+}

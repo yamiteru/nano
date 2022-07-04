@@ -1,8 +1,9 @@
-import { next } from "./event";
-import { EVENT, pull, value } from "./value";
+import { copy, event, next, onNext } from "./event";
 
-const a$ = value<number>(1);
+const count$ = event<number>();
+const double$ = copy(count$, (v) => v * 2);
 
-next(a$[EVENT], 2);
+onNext(double$, console.log);
 
-console.log(`Current: ${pull(a$)}`);
+next(count$, 1);
+next(count$, 2);

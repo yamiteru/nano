@@ -6,3 +6,5 @@ import { CLOSE_EMITTER } from "./_/constants";
 export function onClose<O, I>($stream: Falsable<Stream<I, O>>, subscriber: TSubscriber<undefined>) {
     return on(CLOSE_EMITTER, $stream, subscriber);
 }
+
+export const streamOnClose = onClose;

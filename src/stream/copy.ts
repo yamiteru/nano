@@ -23,3 +23,5 @@ export function copy<II, IO, O = IO>(
 
     return $_;
 }
+
+export const streamCopy = copy;

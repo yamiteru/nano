@@ -7,3 +7,5 @@ export function size<T>($emitter: Emitter<T>): number {
         ? ($emitter[SET] as EmitterSet<T>).size
         : _zero;
 }
+
+export const emitterSize = size;

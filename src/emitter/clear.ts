@@ -5,3 +5,5 @@ import { Emitter } from "./_/types";
 export function clear<T>($emitter: Emitter<T>): void {
     $emitter[SET] = _null;
 }
+
+export const emitterClear = clear;

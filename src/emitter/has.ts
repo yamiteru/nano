@@ -11,3 +11,5 @@ export function has<T>(
         ? ($emitter[SET] as EmitterSet<T>).has(subscriber)
         : _false;
 }
+
+export const emitterHas = has;

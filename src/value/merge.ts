@@ -8,10 +8,7 @@ import {
     TValueInput
 } from "../_/types";
 import { next } from "./next";
-import { onClose } from "./onClose";
-import { onNext } from "./onNext";
-import { pull } from "./pull";
-import { value } from "./value";
+import { onClose, onNext, pull, value } from ".";
 import { Value } from "./_/types";
 
 export function merge<
@@ -49,3 +46,5 @@ export function merge<
 
     return $_;
 }
+
+export const valueMerge = merge;

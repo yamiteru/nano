@@ -1,7 +1,7 @@
 import { Nullable, TMap, TSubscribers } from "../_/types";
 import { _false, _null } from "../_/constants";
 import { Value } from "./_/types";
-import { onClose as streamOnClose, stream, Stream } from "../stream";
+import { streamOnClose, stream, Stream } from "../stream";
 import { GET_VALUE, SET_VALUE, STREAM } from "./_/constants";
 
 export function value<O, I = O>(
@@ -27,3 +27,5 @@ export function value<O, I = O>(
 
     return obj;
 }
+
+export const createValue = value;

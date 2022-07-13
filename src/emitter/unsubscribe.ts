@@ -7,3 +7,5 @@ export function unsubscribe<T>($emitter: Emitter<T>, subscriber: TSubscriber<T>)
         ($emitter[SET] as EmitterSet<T>).delete(subscriber);
     }
 }
+
+export const emitterUnsubscribe = unsubscribe;

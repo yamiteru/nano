@@ -3,7 +3,8 @@ import { Value } from "../value/_/types";
 export type Either<L, R> = L | R;
 export type Nullable<T> = Either<null, T>;
 export type Falsable<T> = Either<false, T>;
-export type Noop = () => void;
+export type Thunk<T> = () => T;
+export type Noop = Thunk<void>;
 
 export type TMap<
     Input,

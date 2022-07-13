@@ -27,3 +27,5 @@ export function copy<II, IO, O = IO>(
 
     return _$;
 }
+
+export const valueCopy = copy;

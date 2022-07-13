@@ -6,3 +6,5 @@ import { NEXT_EMITTER } from "./_/constants";
 export function onNext<O, I>($stream: Falsable<Stream<I, O>>, subscriber: TSubscriber<O>) {
     return on(NEXT_EMITTER, $stream, subscriber);
 }
+
+export const streamOnNext = onNext;

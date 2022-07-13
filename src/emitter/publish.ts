@@ -8,3 +8,5 @@ export function publish<T>($emitter: Emitter<T>, value: T): void {
         }
     }
 }
+
+export const emitterPublish = publish;

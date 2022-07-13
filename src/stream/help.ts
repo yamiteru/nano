@@ -1,6 +1,19 @@
-import { Emitter, emitterWithCallbacks, publish, subscribe, unsubscribe } from "../emitter";
+import {
+    Emitter,
+    emitterWithCallbacks,
+    emitterPublish,
+    emitterSubscribe,
+    emitterUnsubscribe
+} from "../emitter";
 import { _undefined } from "../_/constants";
-import { Falsable, Noop, Nullable, TMap, TSubscriber, TSubscribers } from "../_/types";
+import {
+    Falsable,
+    Noop,
+    Nullable,
+    TMap,
+    TSubscriber,
+    TSubscribers
+} from "../_/types";
 import { MAP, NEXT_EMITTER } from "./_/constants";
 import { Stream } from "./_/types";
 
@@ -32,7 +45,7 @@ export function nextWithPreviosuValue<O, I>(
             callback?.(nextValue as O);
 
             if($stream?.[NEXT_EMITTER]) {
-                publish($stream[NEXT_EMITTER] as Emitter<O>, nextValue);
+                emitterPublish($stream[NEXT_EMITTER] as Emitter<O>, nextValue);
             }
         }
     }
@@ -45,7 +58,7 @@ export function on<O, I>(
 ): Noop {
     if($stream) {
         if(($stream as any)[symbol]) {
-            subscribe(($stream as any)[symbol], callback);
+            emitterSubscribe(($stream as any)[symbol], callback);
         } else {
             ($stream as any)[symbol] = emitterWithCallbacks([callback]);
         }
@@ -53,7 +66,7 @@ export function on<O, I>(
 
     return () => {
         if($stream && ($stream as any)?.[symbol]) {
-            unsubscribe(($stream as any)[symbol], callback);
+            emitterUnsubscribe(($stream as any)[symbol], callback);
         }
     };
 }

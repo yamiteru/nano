@@ -3,7 +3,6 @@ import { emitter } from "./emitter";
 import { subscribe } from "./subscribe";
 import { Emitter } from "./_/types";
 
-
 export function once<T>(): Emitter<T> {
     const $emitter = emitter<T>();
 
@@ -13,3 +12,5 @@ export function once<T>(): Emitter<T> {
 
     return $emitter;
 }
+
+export const emitterOnce = once;

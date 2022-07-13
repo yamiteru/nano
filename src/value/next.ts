@@ -11,3 +11,5 @@ export function next<O, I>($value: Value<I, O>, value: I) {
         (value) => $value[SET_VALUE](value)
     );
 }
+
+export const valueNext = next;

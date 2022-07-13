@@ -18,3 +18,5 @@ export function stream<O, I = O>(
         [MAP]: map
     };
 }
+
+export const createStream = stream;

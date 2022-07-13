@@ -13,3 +13,6 @@ export function emitterWithCallbacks<T>(
         [SET]: new Set<TSubscriber<T>>(subscribers)
     };
 }
+
+export const createEmitter = emitter;
+export const createEmitterWithCallbacks = emitterWithCallbacks;

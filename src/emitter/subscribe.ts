@@ -9,3 +9,5 @@ export function subscribe<T>($emitter: Emitter<T>, subscriber: TSubscriber<T>): 
         ($emitter[SET] as Set<TSubscriber<T>>).add(subscriber);
     }
 }
+
+export const emitterSubscribe = subscribe;

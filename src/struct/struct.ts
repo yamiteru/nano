@@ -9,69 +9,64 @@ import {
     valuePull
 } from "../value";
 import { STREAM } from "../value/_/constants";
-import { Value } from "../value/_/types";
-import { Struct, StructInput } from "./_/types";
+import { Struct, StructData, StructInput } from "./_/types";
 
-export function struct<T extends StructInput<T>>(value: {
-    [K in keyof T]: T[K];
-}): Struct<T> {
-    // let data = Object.create(value);
+export function struct<T extends StructInput>(value: StructData<T>): Struct<T> {
+    let data = Object.create(value);
 
-    // const values: any = {};
-    // const proxy: any = {};
+    const values: any = {};
+    const proxy: any = {};
 
-    // const $stream = createStream<[key: string, value: string]>(null, {
-    //     close: () => {
-    //         for(const k in values) {
-    //             valueClose(values[k]);
-    //         }
-    //     }
-    // });
+    const $stream = createStream<[key: string, value: string]>(null, {
+        close: () => {
+            for(const k in values) {
+                valueClose(values[k]);
+            }
+        }
+    });
 
-    // for(const k in data) {
-    //     const isFunction = typeof data[k] === "function";
-    //     const checkComputed = () => {
-    //         if(!values[k] && isFunction) {
-    //             values[k] = data[k](proxy);
-    //         }
-    //     };
+    for(const k in data) {
+        const isFunction = typeof data[k] === "function";
+        const checkComputed = () => {
+            if(!values[k] && isFunction) {
+                values[k] = data[k](proxy);
+            }
+        };
 
-    //     proxy[k] = (value: any) => {
-    //         checkComputed();
+        proxy[k] = (value: any) => {
+            checkComputed();
 
-    //         const _$ = values[k];
+            const _$ = values[k];
 
-    //         if(!isFunction && value) {
-    //             if(_$) {
-    //                 valueNext(_$, value);
-    //             } else {
-    //                 data[k] = value;
-    //             }
+            if(!isFunction && value) {
+                if(_$) {
+                    valueNext(_$, value);
+                } else {
+                    data[k] = value;
+                }
 
-    //             streamNext($stream, [k, value]);
-    //         }
+                streamNext($stream, [k, value]);
+            }
 
-    //         return _$
-    //             ? valuePull(_$)
-    //             : data[k];
-    //     };
+            return _$
+                ? valuePull(_$)
+                : data[k];
+        };
 
-    //     proxy[`$${k}`] = () => {
-    //         checkComputed();
+        proxy[`$${k}`] = () => {
+            checkComputed();
 
-    //         if(!values[k]) {
-    //             values[k] = createValue(data[k]);
-    //         }
+            if(!values[k]) {
+                values[k] = createValue(data[k]);
+            }
 
-    //         return values[k];
-    //     };
-    // }
+            return values[k];
+        };
+    }
 
-    // proxy[STREAM] = () => $stream;
+    proxy[STREAM] = () => $stream;
 
-    // return proxy;
-
-    return value;
+    return proxy;
 }
 
 export const createStruct = struct;

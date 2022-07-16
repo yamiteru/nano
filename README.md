@@ -70,15 +70,16 @@ const hasXYZ = has($click, logXYZ);
 
 ### TODOS
 
-- [] Make emitter return only Set | null | false
-- [] Add lazy value to emitter
-- [] Add async batch publish
-- [] Add copy
-- [] Add timeout 
-- [] Add interval
-- [] Add debounce
-- [] Add effect
-- [] Rename to observable
+- [X] Rename to observable
+- [X] Make emitter return only Set | null | false
+- [X] Add lazy value to emitter
+- [X] Add copy
+- [X] Add timeout 
+- [X] Add interval
+- [X] Add debounce
+- [X] Add effect
+- [X] Add publishAsync
+- [X] Add async batch publish
 
 
 ## Stream

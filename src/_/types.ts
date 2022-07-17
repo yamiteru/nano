@@ -1,3 +1,4 @@
+import { Subscriber } from "../observable";
 import { Value } from "../value/_/types";
 
 export type Either<L, R> = L | R;
@@ -6,19 +7,11 @@ export type Falsable<T> = Either<false, T>;
 export type Thunk<T> = () => T;
 export type Noop = Thunk<void>;
 
-export type TMap<
-    Input,
-    Output,
-    Previous = undefined
-> = (value: Input, previous: Previous) =>
-    Either<undefined, Output>;
-
-export type TSubscriber<T> = (value: T) => void;
-export type TSubscribers<T> = {
-    next?: TSubscriber<T>;
-    error?: TSubscriber<string>;
-    close?: TSubscriber<undefined>;
-} | TSubscriber<T>;
+export type Subscribers<T> = {
+    next?: Subscriber<T>;
+    error?: Subscriber<string>;
+    close?: Subscriber<undefined>;
+} | Subscriber<T>;
 
 export type TValueArray = Value<any, any>[];
 

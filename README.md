@@ -80,6 +80,13 @@ const hasXYZ = has($click, logXYZ);
 - [X] Add effect
 - [X] Add publishAsync
 - [X] Add async batch publish
+- [X] Debounce should try to clearTimeout before setting it to a new value
+- [X] All maps should be able to return undefined to not publish value to all subscribers
+- [X] Add mapped observable (map<number>((v) => v * 2))
+- [X] Add throttle
+- [X] Add map
+- [X] Add filter
+- [X] Add pure map functions
 
 
 ## Stream

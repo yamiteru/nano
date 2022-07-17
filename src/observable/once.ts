@@ -1,8 +1,8 @@
-import { observableWithCallbacks, close } from ".";
+import { observableWithSubscribers, close } from ".";
 import { Observable } from "./_/types";
 
 export function once<T>(): Observable<T> {
-    const $observable: Observable<T> = observableWithCallbacks<T>([
+    const $observable: Observable<T> = observableWithSubscribers<T>([
         () => close($observable)
     ]);
 

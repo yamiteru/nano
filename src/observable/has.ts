@@ -1,9 +1,9 @@
 import { _false } from "../_/constants";
-import { Observable, Subsriber } from "./_/types";
+import { Observable, Subscriber } from "./_/types";
 
 export function has<T>(
     $observable: Observable<T>,
-    subscriber: Subsriber<T>
+    subscriber: Subscriber<T>
 ): boolean {
     return $observable[0]
         ? $observable[0].has(subscriber)

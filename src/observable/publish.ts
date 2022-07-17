@@ -2,22 +2,25 @@ import { Thunk } from "../_/types";
 import { Observable } from "./_/types";
 
 export function publish<T>(
-    $observable: Observable<T>,
+    $observable: Observable<T, any>,
     value: Thunk<T> | T
 ): void {
-    if($observable[0]) {
-        const lazyValue = typeof value === "function"
-            ? value as Thunk<T>
-            : () => value;
+    if($observable[0] && $observable[0].size) {
+        const mappedValue = $observable[1](typeof value === "function"
+            ? (value as Thunk<T>)()
+            : value
+        );
 
-        for(const subscriber of $observable[0].values()) {
-            subscriber(lazyValue);
+        if(mappedValue !== undefined) {
+            for(const subscriber of $observable[0].values()) {
+                subscriber(mappedValue);
+            }
         }
     }
 }
 
 export async function publishAsync<T>(
-    $observable: Observable<T>,
+    $observable: Observable<T, any>,
     value: Thunk<T> | T
 ): Promise<void> {
     publish($observable, value);

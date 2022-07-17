@@ -1,7 +1,8 @@
-import { Thunk } from "../../_/types";
+export type Map<I, O, T = undefined> = (value: I) => O | T;
 
-export type Map<I, O> = (value: I) => O;
+export type Subscriber<T> = (value: T) => void;
 
-export type Subsriber<T> = (value: Thunk<T>) => void;
-
-export type Observable<T> = [null | false | Set<Subsriber<T>>];
+export type Observable<I, O = I> = [
+    subscribers: null | false | Set<Subscriber<O>>,
+    map: Map<I, O>
+];
